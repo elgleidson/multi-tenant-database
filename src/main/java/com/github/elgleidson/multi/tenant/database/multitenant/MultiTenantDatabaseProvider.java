@@ -10,14 +10,12 @@ import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTen
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.github.elgleidson.multi.tenant.database.domain.core.Tenant;
 import com.github.elgleidson.multi.tenant.database.exception.TenantNotExistsException;
 import com.github.elgleidson.multi.tenant.database.repository.core.TenantRepository;
 import com.github.elgleidson.multi.tenant.database.util.DataSourceUtil;
 
-@Component
 public class MultiTenantDatabaseProvider extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 	
 	private static final long serialVersionUID = 1L;

@@ -5,21 +5,21 @@
 
     <groupId>com.github.elgleidson</groupId>
     <artifactId>multi-tenant-database</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
+        <version>2.2.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <jjwt.version>0.9.0</jjwt.version>
+        <java.version>11</java.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <springfox.version>2.9.2</springfox.version>
     </properties>
 
@@ -45,10 +45,10 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <!-- for java 8 date/time suport -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>com.fasterxml.jackson.datatype</groupId> -->
+<!--             <artifactId>jackson-datatype-jsr310</artifactId> -->
+<!--         </dependency> -->
         <!-- for JWT support -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
