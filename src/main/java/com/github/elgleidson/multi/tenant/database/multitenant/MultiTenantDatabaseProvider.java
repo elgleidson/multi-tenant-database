@@ -10,12 +10,14 @@ import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTen
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.github.elgleidson.multi.tenant.database.domain.core.Tenant;
 import com.github.elgleidson.multi.tenant.database.exception.TenantNotExistsException;
 import com.github.elgleidson.multi.tenant.database.repository.core.TenantRepository;
 import com.github.elgleidson.multi.tenant.database.util.DataSourceUtil;
 
+@Component
 public class MultiTenantDatabaseProvider extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 	
 	private static final long serialVersionUID = 1L;
@@ -63,7 +65,7 @@ public class MultiTenantDatabaseProvider extends AbstractDataSourceBasedMultiTen
 	private void initTenantDataSourcesMap() {
 		log.info("Initializing tenant datasources map...");
 		tenantRepository.findAll().forEach(tenant -> {
-			DataSource dataSource = DataSourceUtil.createDataSource(tenant.getUrl(), tenant.getUsername(), tenant.getPassword());
+			DataSource dataSource = createDataSource(tenant);
 			tenantDataSources.put(tenant.getName(), dataSource);
 		});
 		log.info("Tenant datasources map initialized!");
@@ -73,11 +75,15 @@ public class MultiTenantDatabaseProvider extends AbstractDataSourceBasedMultiTen
 		Optional<Tenant> findByName = tenantRepository.findByName(tenantIdentifier);
 		if (findByName.isPresent()) {
 			Tenant tenant = findByName.get();
-			DataSource dataSource = DataSourceUtil.createDataSource(tenant.getUrl(), tenant.getUsername(), tenant.getPassword());
+			DataSource dataSource = createDataSource(tenant);
 			tenantDataSources.put(tenantIdentifier, dataSource);
 		} else {
 			throw new TenantNotExistsException("Tenant '" + tenantIdentifier + "' not exists! Check the tenant table!");
 		}
+	}
+	
+	private DataSource createDataSource(Tenant tenant) {
+		return DataSourceUtil.createDataSource(tenant.getUrl(), tenant.getUsername(), tenant.getPassword());
 	}
 	
 }

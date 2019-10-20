@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-import com.github.elgleidson.multi.tenant.database.util.MultiTenantDatabaseLiquibase;
-
 import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration

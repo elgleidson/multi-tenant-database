@@ -93,7 +93,7 @@ public class UserService implements UserDetailsService {
         if (user.isPresent()) {
         	log.debug("Found User {}", user);
         } else {
-        	log.debug("User not found by email {}!", username);
+        	log.debug("User not found by username {}!", username);
         }
         return user;
     }

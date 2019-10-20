@@ -1,4 +1,4 @@
-package com.github.elgleidson.multi.tenant.database.util;
+package com.github.elgleidson.multi.tenant.database.config;
 
 import java.util.Map;
 
@@ -48,19 +48,23 @@ public class MultiTenantDatabaseLiquibase extends MultiTenantSpringLiquibase {
 		liquibase.setChangeLog(getChangeLog());
 		liquibase.setChangeLogParameters(getParameters());
 		liquibase.setContexts(getContexts());
-        liquibase.setLabels(getLabels());
+		liquibase.setLabels(getLabels());
 		liquibase.setDropFirst(isDropFirst());
 		liquibase.setShouldRun(isShouldRun());
 		liquibase.setRollbackFile(getRollbackFile());
-		liquibase.setResourceLoader(resourceLoader);
 		liquibase.setDataSource(dataSource);
 		liquibase.setDefaultSchema(getDefaultSchema());
+		liquibase.setResourceLoader(getResourceLoader());
 		return liquibase;
 	}
 	
 	@Override
 	public void setResourceLoader(ResourceLoader resourceLoader) {
 		this.resourceLoader = resourceLoader;
+	}
+
+	public ResourceLoader getResourceLoader() {
+		return resourceLoader;
 	}
 
 }

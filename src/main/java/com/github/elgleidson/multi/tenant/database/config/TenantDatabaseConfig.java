@@ -3,10 +3,12 @@ package com.github.elgleidson.multi.tenant.database.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,10 +27,7 @@ import com.github.elgleidson.multi.tenant.database.repository.tenant.DemoReposit
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-	basePackages= {
-		"com.github.elgleidson.multi.tenant.database.domain.tenant",
-		"com.github.elgleidson.multi.tenant.database.repository.tenant"
-	},
+	basePackageClasses = { Demo.class, DemoRepository.class },
 	entityManagerFactoryRef="tenantEntityManagerFactory",
 	transactionManagerRef="tenantTransactionManager"
 )
@@ -42,24 +41,15 @@ public class TenantDatabaseConfig {
         return new HibernateJpaVendorAdapter();
     }
 	
-	@Bean
-	@ConditionalOnBean(name="coreEntityManagerFactory")
-	public MultiTenantDatabaseResolver multiTenantDatabaseResolver() {
-		return new MultiTenantDatabaseResolver();
-	}
-	
-	@Bean
-	public MultiTenantDatabaseProvider multiTenantConnectionProvider() {
-		return new MultiTenantDatabaseProvider();
-	}
-	
 	@Bean("tenantEntityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean tenantEntityManagerFactory() {
+	public LocalContainerEntityManagerFactoryBean tenantEntityManagerFactory(
+			MultiTenantDatabaseProvider multiTenantDatabaseProvider,
+			MultiTenantDatabaseResolver multiTenantDatabaseResolver) {
 		Map<String, Object> jpaPropertiesMap = new HashMap<>();
 		jpaPropertiesMap.putAll(jpaProperties.getProperties());
 		jpaPropertiesMap.put(Environment.MULTI_TENANT, MultiTenancyStrategy.DATABASE);
-		jpaPropertiesMap.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider());
-		jpaPropertiesMap.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, multiTenantDatabaseResolver());
+		jpaPropertiesMap.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantDatabaseProvider);
+		jpaPropertiesMap.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, multiTenantDatabaseResolver);
 
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setPackagesToScan(Demo.class.getPackage().getName(), DemoRepository.class.getPackage().getName());
@@ -71,10 +61,9 @@ public class TenantDatabaseConfig {
 	}
 	
 	@Bean("tenantTransactionManager")
-	public JpaTransactionManager tenantTransactionManager() {
-		JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-		jpaTransactionManager.setEntityManagerFactory(tenantEntityManagerFactory().getObject());
-		return jpaTransactionManager;
+	public JpaTransactionManager coreTransactionManager(
+			@Qualifier("tenantEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+		return new JpaTransactionManager(entityManagerFactory);
 	}
 	
 }
