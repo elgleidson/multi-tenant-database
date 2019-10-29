@@ -1,22 +1,17 @@
 package com.github.elgleidson.multi.tenant.database.domain.tenant;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 import com.github.elgleidson.multi.tenant.database.audit.AbstractAuditableEntity;
 
 @Entity
+@Table(name = "demo")
 public class Demo extends AbstractAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sq_demo")
-	@SequenceGenerator(name="sq_demo", sequenceName="sq_demo", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Column

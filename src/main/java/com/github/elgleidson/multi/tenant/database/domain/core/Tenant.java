@@ -1,14 +1,14 @@
 package com.github.elgleidson.multi.tenant.database.domain.core;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "tenant")
 public class Tenant {
 	
 	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
