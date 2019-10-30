@@ -9,12 +9,14 @@ logging:
 #    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 spring:
+  application:
+    name: Multi-Tenant-Database
   datasource:
     # default (core) database
-    url: jdbc:postgresql://localhost:5432/multi-tenant-core
-#    url: jdbc:mysql://localhost:3306/core
-    username: multi-tenant
-    password: multi-tenant
+    url: jdbc:postgresql://localhost:5432/multi_tenant_db_core
+#    url: jdbc:mysql://localhost:3306/multi_tenant_db_core
+    username: multi_tenant
+    password: multi_tenant
   jpa:
     database: postgresql
 #    database: mysql

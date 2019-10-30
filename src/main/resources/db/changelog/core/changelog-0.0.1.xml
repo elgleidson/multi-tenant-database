@@ -94,19 +94,19 @@
     <changeSet id="9" author="elgleidson">
     	<insert tableName="tenant" >
     		<column name="id">1</column>
-    		<column name="name">tenant_user_1</column>
-    		<column name="url">jdbc:postgresql://localhost:5432/multi-tenant-user1</column>
-<!--			<column name="url">jdbc:mysql://localhost:3306/user1</column>-->
-    		<column name="username">multi-tenant</column>
-    		<column name="password">multi-tenant</column>
+    		<column name="name">tenant_1</column>
+    		<column name="url">jdbc:postgresql://localhost:5432/multi_tenant_db_tenant1</column>
+<!--			<column name="url">jdbc:mysql://localhost:3306/multi_tenant_db_tenant1</column>-->
+    		<column name="username">multi_tenant</column>
+    		<column name="password">multi_tenant</column>
     	</insert>
     	<insert tableName="tenant" >
     		<column name="id">2</column>
-    		<column name="name">tenant_user_2</column>
-    		<column name="url">jdbc:postgresql://localhost:5432/multi-tenant-user2</column>
-<!--			<column name="url">jdbc:mysql://localhost:3306/user2</column>-->
-    		<column name="username">multi-tenant</column>
-    		<column name="password">multi-tenant</column>
+    		<column name="name">tenant_2</column>
+    		<column name="url">jdbc:postgresql://localhost:5432/multi_tenant_db_tenant2</column>
+<!--			<column name="url">jdbc:mysql://localhost:3306/multi_tenant_db_tenant2</column>-->
+    		<column name="username">multi_tenant</column>
+    		<column name="password">multi_tenant</column>
     	</insert>
     </changeSet>
     

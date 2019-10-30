@@ -1,3 +1,3 @@
 spring:
   application:
-    name: Multi-Tenant-Spring-Security
+    name: Multi-Tenant-Database
